@@ -4,18 +4,18 @@ import {Card, CardHeader, CardText} from 'material-ui/Card';
 class ShowPosts extends React.Component {
   constructor(props) {
     super(props)
-    console.log("constructing show posts")
+    this.state = {
+      posts: []
+    }
   }
 
   componentWillReceiveProps() {
     console.log("show posts props")
   }
 
-  
-
   render() {
 
-    const postsHtml = this.props.posts.map(elem => {
+    const postsHtml = this.state.posts.map(elem => {
       return (
         <div className='post'>
         <Card className="post-paper">
@@ -36,6 +36,13 @@ class ShowPosts extends React.Component {
       </div>
     )
   }
+
+  componentDidMount() {
+    fetch ('http://10.206.25.26:8080/posts')
+    .then(response => response.json())
+    .then(posts => this.setState ({ posts: posts }))
+  }
+
 }
 
 export default ShowPosts;

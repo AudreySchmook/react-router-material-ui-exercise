@@ -37,9 +37,21 @@ class PostForm extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     // take our post in state and pass it up to the parent component
-    this.props.addPost(this.state)
-    this.setState(this.defaultState)
-    this.props.history.push("/posts")
+    //this.props.addPost(this.state)
+    //this.setState(this.defaultState)
+    //this.props.history.push("/posts")
+    fetch('http://10.206.25.26:8080/posts', {
+      method: 'POST',
+      body: JSON.stringify(this.state),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+     .then(() => {
+       this.setState(this.defaultState)
+       this.props.history.push("/posts")
+     })
+
   }
 
   render() {
